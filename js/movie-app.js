@@ -1,34 +1,12 @@
 $(document).ready( function(){
-"use strict";
+    "use strict";
 
-// url for Glitch Movie API
-const url = "https://silver-mango-flute.glitch.me/movies"
-const mainRow = $('.main-row')
-const loading = $('.loading')
-const refreshPage = $('.fetch-data')
-const userTitle = $('#titleInput')
-const userRating = $('#ratingSelect')
-const addBtn = $('#addMovie')
-let id = 5
-
-    // addBtn.click(function (){
-    //     id += 1;
-    //     const userMovie = {
-    //         id: id,
-    //         title: userTitle.value,
-    //         rating: userRating.value
-    //     }
-    //     const postOptions = {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify(userMovie)
-    //     }
-    //
-    //     fetch(url, postOptions)
-    //         .then(console.log)
-    // })
+    // url for Glitch Movie API
+    const url = "https://silver-mango-flute.glitch.me/movies"
+    const mainRow = $('.main-row')
+    const loading = $('.loading')
+    const refreshPage = $('.fetch-data')
+    const addBtn = $('#addMovie')
     let mainHTML = ""
 
     refreshPage.click(() => {
@@ -47,15 +25,12 @@ let id = 5
                     renderHTML(data);
                     mainRow.toggle('hidden');
                 })
-
                 .catch(error => console.error(error))
         }, 2000)
-
     }
 
     const renderHTML = data => {
         mainHTML = ""
-
         for(let ele of data) {
             mainHTML += `<div class="col-12 col-sm-6 col-md-4 col-lg-3"
             <div class="card" style="width: 18rem;">
@@ -74,22 +49,46 @@ let id = 5
         mainRow.html(mainHTML)
     }
 
-    // const reviewObj = {
-    //     id: 6,
-    //     title: 'Codey',
-    //     rating: 5,
-    // };
+    const deleteOptions = {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+    }
 
-    // const options = {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(reviewObj),
-    // };
-    // fetch(url, options)
-    //     .then( response => console.log(response) ) /* review was created successfully */
-    //     .catch( error => console.error(error) ); /* handle errors */
 
-console.log("test");
+    // DELETE FETCH
+    // fetch(`${url}/9`, deleteOptions)
+    //     .then(res => res.json())
+    //     .then(data => console.log(data))
+
+
+    //THIS CHECKS THE OBJECT AT SPECIFIED ID
+    // fetch(`${url}/10`)
+    //     .then(res => res.json())
+    //     .then(data => console.log(data))
+
+
+    //ADD BUTTON COMPLETE
+    addBtn.click(() => {
+        let userTitle = $('#titleInput').val()
+        let userRating = $('#ratingSelect').val()
+        let userMovie = {
+            title: userTitle,
+            rating: userRating
+        }
+        const postOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userMovie)
+        }
+        fetch(url, postOptions)
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .then(fetchData())
+            .catch(error => console.error(error))
+    })
+
 })
