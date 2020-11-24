@@ -23,9 +23,36 @@
     </div>
 </div>
 
-<div class="conatiner-fluid">
+<div class="container-fluid">
 
     <div class="row main-row"></div>
+
+</div>
+
+<div class="container">
+    <h1>Add a movie!</h1>
+        <form class="form-inline">
+            <label class="sr-only" for="inlineFormInputName2"></label>
+            <input id="titleInput" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="title">
+
+            <label class="sr-only">Username</label>
+
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Rating</div>
+                </div>
+                <select id="ratingSelect" class="form-control">
+                    <option selected>Choose...</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+
+            <button id="addMovie" type="submit" class="btn btn-primary mb-2">Submit</button>
+        </form>
 
 </div>
 
