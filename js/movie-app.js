@@ -38,18 +38,19 @@ $(document).ready( function(){
     const renderHTML = data => {
         mainHTML = ""
         for(let ele of data) {
-            mainHTML += `<div id="movie${ele.id}" class="col-12 col-sm-6 col-md-4 col-lg-3"
+            mainHTML += `<div id="movie${ele.id}" class="col-12 col-sm-6 col-md-4 col-lg-3">
             <div class="card" style="width: 18rem;">
             <img src="${ele.poster}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">${ele.title}</h5>
+                    <p class="card-text">${ele.plot}</p>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Rating: ${ele.rating}</li>
                         <li class="list-group-item">Release Year: ${ele.year}</li>
                         <li class="list-group-item">Genres: ${ele.genre}</li>
                     </ul>
-                    <p class="card-text">${ele.plot}</p>
                     <button class="btn btn-primary edit-data${ele.id}">Edit</button>
+                    <button id="deleteMovie${ele.id}" class="btn btn-primary mb-2">Delete</button>  
                     <div class="edit${ele.id} hidden">
                     <input id="titleInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" placeholder="${ele.title}">
                     <label class="sr-only">Username</label>
@@ -93,11 +94,11 @@ $(document).ready( function(){
             mainHTML += `</select>
             </div>
             <button id="editMovie${ele.id}" class="btn btn-primary mb-2">Submit</button>
-                </div>
-        </div></div></div>`
+                </div></div></div></div></div>`
         }
         mainRow.html(mainHTML)
         for(let ele of data) {
+            $(`#deleteMovie${ele.id}`)
             $(`.edit-data${ele.id}`).click(function () {
                 $(`.edit${ele.id}`).toggle('hidden')
             })
