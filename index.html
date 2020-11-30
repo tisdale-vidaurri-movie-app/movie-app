@@ -13,17 +13,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="#">MOVIE APP</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">Login</a>
-                <a class="nav-item nav-link" href="#">Favorites</a>
-                <a class="nav-item nav-link disabled" href="#">Top Rated</a>
-            </div>
-        </div>
+        <button class="btn btn-success" data-toggle="modal" data-target="#addModal">Add a Movie</button>
     </nav>
 
     <div class="conatiner-fluid loading-container">
@@ -40,34 +30,50 @@
 
 </div>
 
-<div class="container">
-    <h1>Add a movie!</h1>
-
-
-            <input id="titleInput" type="text" class="form-control mb-2 mr-sm-2" placeholder="title">
-
-            <label class="sr-only">Username</label>
-
-            <div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Rating</div>
-                </div>
-                <select id="ratingSelect" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-
-            <button id="addMovie" class="btn btn-primary mb-2">Submit</button>
-
-
-</div>
-
 <div class="modal-container"></div>
+
+
+<!--    ADD MOVIE MODAL-->
+
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addAModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAModal">Add A Movie</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="titleInput" type="text" class="form-control mb-2 mr-sm-2" placeholder="title">
+
+                    <input id="yearInput" type="text" class="form-control mb-2 mr-sm-2" placeholder="Release Year">
+
+                    <input id="genreInput" type="text" class="form-control mb-2 mr-sm-2" placeholder="Genre">
+
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Rating</div>
+                        </div>
+                        <select id="ratingSelect" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+
+                    <input id="plotInput" type="text" class="form-control mb-2 mr-sm-2" placeholder="Plot">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="addMovie" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

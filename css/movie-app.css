@@ -32,10 +32,14 @@ body{
 .movie-columns {
     display: flex;
     justify-content: center;
+    margin: 15px auto;
 }
 .button-row {
     display: flex;
 }
 .button {
     flex-grow: 1;
+}
+li {
+    background: var(--yellow);
 }
