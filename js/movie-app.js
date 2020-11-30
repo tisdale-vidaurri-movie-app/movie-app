@@ -77,9 +77,15 @@ $(document).ready( function(){
                 $(`#editMovie${ele.id}`).attr('disabled');
                 let userTitle = $(`#titleInput${ele.id}`).val()
                 let userRating = $(`#ratingSelect${ele.id}`).val()
+                let userYear = $(`#yearInput${ele.id}`).val()
+                let userGenre = $(`#genreInput${ele.id}`).val()
+                let userPlot = $(`#plotInput${ele.id}`).val()
                 let userMovie = {
                     title: userTitle,
-                    rating: userRating
+                    rating: userRating,
+                    year: userYear,
+                    genre: userGenre,
+                    plot: userPlot
                 }
                 const patchOptions = {
                     method: 'PATCH',
@@ -119,6 +125,8 @@ $(document).ready( function(){
                                     </div>
                                     <div class="modal-body">
                                         <input id="titleInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" placeholder="${ele.title}">
+                                        <input id="yearInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" placeholder="${ele.year}">
+                                        <input id="genreInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" placeholder="${ele.genre}">
                                         <div class="input-group mb-2 mr-sm-2">
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Rating</div>
@@ -156,7 +164,8 @@ $(document).ready( function(){
                           <option selected>5</option>`
             }
             modalHTML += `</select>
-                    </div>
+                            </div>
+                           <textarea id="plotInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" placeholder="${ele.plot}"></textarea>
                   <div class="modal-footer">
                        <button id="editMovie${ele.id}" class="btn btn-primary" data-dismiss="modal">Submit</button>
                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
