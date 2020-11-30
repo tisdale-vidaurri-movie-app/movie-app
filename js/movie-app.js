@@ -9,13 +9,18 @@ $(document).ready( function(){
     let modalContainer = $('.modal-container')
     let mainHTML = ""
     let modalHTML = ""
-    let newModalHTML = ""
-    // const movieApiURL = `http://www.omdbapi.com/?apikey=${omdbKey}&`
+    const deleteOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const movieApiURL = `http://www.omdbapi.com/?apikey=[${omdbKey}]&`
 
-    // fetch(`http://www.omdbapi.com/?apikey=${omdbKey}?t=SavingPrivateRyan`)
-    //     .then(res => res.json())
-    //     .then(data => console.log(data))
-    //     .catch(error => console.error(error))
+    fetch(`${movieApiURL}/?t=SavingPrivateRyan`)
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error))
 
     const fetchData = () => {
         loading.toggle('hidden')
@@ -32,27 +37,24 @@ $(document).ready( function(){
         }, 2000)
     }
 
-    fetchData();
-
     const renderHTML = data => {
         mainHTML = ""
         modalHTML = ""
         createModal(data)
         for(let ele of data) {
-            mainHTML += `<div id="movie${ele.id}" class="col-12 col-md-6 col-lg-4 movie-columns">
+            mainHTML += `<div class="col-12 col-md-6 col-lg-4 movie-columns">
                             <div class="card" style="width: 18rem;">
-                                <img src="${ele.poster}" class="card-img-top" alt="...">
+                                <img id="movie${ele.id}" src="${ele.poster}" class="card-img-top" alt="Movie Poster" style="height: 100%; width: auto">
+                                <div class="info${ele.id} hidden">
                                 <div class="card-body">
                                 <h5 class="card-title">${ele.title}</h5>
                                 <p class="card-text">${ele.plot}</p>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Rating: ${ele.rating}</li>
-                                    <li class="list-group-item">Release Year: ${ele.year}</li>
-                                    <li class="list-group-item">Genres: ${ele.genre}</li>
-                                </ul>
+                                <p class="card-text">Rating: ${ele.rating}</p>
+                                <p class="card-text">Release Year: ${ele.year}</p>
+                                <p class="card-text">Genres: ${ele.genre}</p>
                                 <button class="btn-block btn btn-warning edit-data${ele.id}" data-toggle="modal" data-target="#editModal${ele.id}">Edit</button>
                                 <button id="deleteMovie${ele.id}" class="btn-block btn btn-warning">Delete</button>
-                            </div></div></div>`
+                            </div></div></div></div>`
         }
         mainRow.html(mainHTML)
         for(let ele of data) {
@@ -93,10 +95,18 @@ $(document).ready( function(){
                     .then($(`#editMovie${ele.id}`).removeAttr('disabled'))
                     .catch(error => console.error(error))
             })
+            $(`#movie${ele.id}`).click(function(){
+                $(`.info${ele.id}`).toggle('hidden')
+                $(`#movie${ele.id}`).toggle('hidden')
+            })
+            $(`.info${ele.id}`).click(function(){
+                $(`.info${ele.id}`).toggle('hidden')
+                $(`#movie${ele.id}`).toggle('hidden')
+            })
         }
     }
 
-    function createModal(data){
+    const createModal = data => {
         for(let ele of data) {
             modalHTML += `<div class="modal fade" id="editModal${ele.id}" tabindex="-1" role="dialog" aria-labelledby="${ele.id}ModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -148,38 +158,27 @@ $(document).ready( function(){
             modalHTML += `</select>
                     </div>
                   <div class="modal-footer">
-                       <button id="editMovie${ele.id}" class="btn btn-primary mb-2" data-dismiss="modal">Submit</button>
+                       <button id="editMovie${ele.id}" class="btn btn-primary" data-dismiss="modal">Submit</button>
                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   </div></div></div></div></div>`
         }
         modalContainer.html(modalHTML)
     }
 
-    const deleteOptions = {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-    }
-
-
-
-
-
-    //THIS CHECKS THE OBJECT AT SPECIFIED ID
-    // fetch(`${url}/10`)
-    //     .then(res => res.json())
-    //     .then(data => console.log(data))
-
-
     //ADD BUTTON COMPLETE
     addBtn.click(() => {
         addBtn.attr('disabled');
         let userTitle = $('#titleInput').val()
         let userRating = $('#ratingSelect').val()
+        let userYear = $('#yearInput').val()
+        let userGenre = $('#genreInput').val()
+        let userPlot = $('#plotInput').val()
         let userMovie = {
             title: userTitle,
-            rating: userRating
+            rating: userRating,
+            year: userYear,
+            genre: userGenre,
+            plot: userPlot
         }
         const postOptions = {
             method: 'POST',
@@ -196,6 +195,6 @@ $(document).ready( function(){
             .catch(error => console.error(error))
     })
 
-
+    fetchData();
 
 })
