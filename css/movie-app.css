@@ -1,3 +1,25 @@
+:root{
+    --darkblue: #052F5F;
+    --lightblue: #005377;
+    --green: #06a77d;
+    --yellow: #d5c67a;
+    --orange: #f1a208;
+}
+body{
+    color: var(--darkblue);
+    background: var(--lightblue)
+}
+.navbar{
+    background: var(--orange);
+}
+
+.card{
+    background: var(--green);
+    border: 3px solid var(--yellow);
+}
+
+
+
 .loading {
     display: flex;
     justify-content: center;
