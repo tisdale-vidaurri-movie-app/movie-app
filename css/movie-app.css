@@ -40,6 +40,3 @@ body{
 .button {
     flex-grow: 1;
 }
-li {
-    background: var(--yellow);
-}
