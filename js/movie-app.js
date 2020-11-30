@@ -15,9 +15,9 @@ $(document).ready( function(){
             'Content-Type': 'application/json'
         }
     }
-    const movieApiURL = `http://www.omdbapi.com/?apikey=[${omdbKey}]&`
+    const movieApiURL = `https://api.themoviedb.org/3/search/movie?/api_key=${omdbKey}`
 
-    fetch(`${movieApiURL}/?t=SavingPrivateRyan`)
+    fetch(`${movieApiURL}SavingPrivateRyan&callback=?`)
         .then(res => res.json())
         .then(data => console.log(data))
         .catch(error => console.error(error))
@@ -178,7 +178,8 @@ $(document).ready( function(){
             rating: userRating,
             year: userYear,
             genre: userGenre,
-            plot: userPlot
+            plot: userPlot,
+            poster: 'https://m.media-amazon.com/images/M/MV5BOTk5ODg0OTU5M15BMl5BanBnXkFtZTgwMDQ3MDY3NjM@._V1_SX300.jpg'
         }
         const postOptions = {
             method: 'POST',
