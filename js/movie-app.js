@@ -5,13 +5,12 @@ $(document).ready( function(){
     const url = "https://silver-mango-flute.glitch.me/movies"
     const mainRow = $('.main-row')
     const loading = $('.loading')
-    // const refreshPage = $('.fetch-data')
     const addBtn = $('#addMovie')
+    let modalContainer = $('.modal-container')
     let mainHTML = ""
+    let modalHTML = ""
+    let newModalHTML = ""
     // const movieApiURL = `http://www.omdbapi.com/?apikey=${omdbKey}&`
-
-    // refreshPage.click(() => {
-    // })
 
     // fetch(`http://www.omdbapi.com/?apikey=${omdbKey}?t=SavingPrivateRyan`)
     //     .then(res => res.json())
@@ -21,99 +20,39 @@ $(document).ready( function(){
     const fetchData = () => {
         loading.toggle('hidden')
         mainRow.toggle('hidden')
+        setTimeout(function(){
             fetch(url)
                 .then(res => res.json())
                 .then(loading.toggle('hidden'))
                 .then(data => {
-                    console.log(data)
                     renderHTML(data);
                     mainRow.toggle('hidden');
                 })
                 .catch(error => console.error(error))
+        }, 2000)
     }
 
-    $(window).ready(fetchData());
+    fetchData();
 
     const renderHTML = data => {
         mainHTML = ""
+        modalHTML = ""
+        createModal(data)
         for(let ele of data) {
-            mainHTML += `<div id="movie${ele.id}" class="col-12 col-sm-6 col-md-4 col-lg-3">
-            <div class="card" style="width: 18rem;">
-            <img src="${ele.poster}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">${ele.title}</h5>
-                    <p class="card-text">${ele.plot}</p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Rating: ${ele.rating}</li>
-                        <li class="list-group-item">Release Year: ${ele.year}</li>
-                        <li class="list-group-item">Genres: ${ele.genre}</li>
-                    </ul>
-                    <button class="btn btn-primary edit-data${ele.id}" data-toggle="modal" data-target="#editModal${ele.id}">Edit</button>
-                    <button id="deleteMovie${ele.id}" class="btn btn-primary mb-2">Delete</button>  
-<!--                    <div class="edit${ele.id} hidden">-->
-
-                    <div class="modal fade" id="editModal${ele.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Edit ${data.title}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                            <input id="titleInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" placeholder="${ele.title}">
-                            <label class="sr-only">Username</label>
-                    <div class="input-group mb-2 mr-sm-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Rating</div>
-                        </div>
-                        <select id="ratingSelect${ele.id}" class="form-control">\`
-                    console.log(ele.rating);
-                    if(ele.rating === '1'){
-                        mainHTML += \`<option selected>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>\`
-                    } else if(ele.rating === '2') {
-                         mainHTML += \`<option>1</option>
-                            <option selected>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>\`
-                    } else if(ele.rating === '3') {
-                         mainHTML += \`<option>1</option>
-                            <option>2</option>
-                            <option selected>3</option>
-                            <option>4</option>
-                            <option>5</option>\`
-                    } else if(ele.rating === '4') {
-                         mainHTML += \`<option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option selected>4</option>
-                            <option>5</option>\`
-                    } else if(ele.rating === '5') {
-                         mainHTML += \`<option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option selected>5</option>\`
-                    }
-                    mainHTML += \`</select>
-                    </div>
-           
-                                </div>
-                                <div class="modal-footer">
-                                     <button id="editMovie${ele.id}" class="btn btn-primary mb-2">Submit</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                  
-                </div></div></div></div></div>`
+            mainHTML += `<div id="movie${ele.id}" class="col-12 col-md-6 col-lg-4 movie-columns">
+                            <div class="card" style="width: 18rem;">
+                                <img src="${ele.poster}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                <h5 class="card-title">${ele.title}</h5>
+                                <p class="card-text">${ele.plot}</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Rating: ${ele.rating}</li>
+                                    <li class="list-group-item">Release Year: ${ele.year}</li>
+                                    <li class="list-group-item">Genres: ${ele.genre}</li>
+                                </ul>
+                                <button class="btn-block btn btn-warning edit-data${ele.id}" data-toggle="modal" data-target="#editModal${ele.id}">Edit</button>
+                                <button id="deleteMovie${ele.id}" class="btn-block btn btn-warning">Delete</button>
+                            </div></div></div>`
         }
         mainRow.html(mainHTML)
         for(let ele of data) {
@@ -131,9 +70,6 @@ $(document).ready( function(){
                 } else {
                     $(`#deleteMovie${ele.id}`).removeAttr('disabled')
                 }
-            })
-            $(`.edit-data${ele.id}`).click(function () {
-                $(`.edit${ele.id}`).toggle('hidden')
             })
             $(`#editMovie${ele.id}`).click(function () {
                 $(`#editMovie${ele.id}`).attr('disabled');
@@ -160,7 +96,64 @@ $(document).ready( function(){
         }
     }
 
-
+    function createModal(data){
+        for(let ele of data) {
+            modalHTML += `<div class="modal fade" id="editModal${ele.id}" tabindex="-1" role="dialog" aria-labelledby="${ele.id}ModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="${ele.id}ModalLabel">Edit ${ele.title}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input id="titleInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" placeholder="${ele.title}">
+                                        <div class="input-group mb-2 mr-sm-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">Rating</div>
+                                            </div>
+                                            <select id="ratingSelect${ele.id}" class="form-control">`
+            if (ele.rating === '1') {
+                modalHTML += `<option selected>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>`
+            } else if (ele.rating === '2') {
+                modalHTML += `<option>1</option>
+                         <option selected>2</option>
+                         <option>3</option>
+                         <option>4</option>
+                         <option>5</option>`
+            } else if (ele.rating === '3') {
+                modalHTML += `<option>1</option>
+                          <option>2</option>
+                          <option selected>3</option>
+                          <option>4</option>
+                          <option>5</option>`
+            } else if (ele.rating === '4') {
+                modalHTML += `<option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option selected>4</option>
+                          <option>5</option>`
+            } else if (ele.rating === '5') {
+                modalHTML += `<option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option selected>5</option>`
+            }
+            modalHTML += `</select>
+                    </div>
+                  <div class="modal-footer">
+                       <button id="editMovie${ele.id}" class="btn btn-primary mb-2" data-dismiss="modal">Submit</button>
+                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div></div></div></div></div>`
+        }
+        modalContainer.html(modalHTML)
+    }
 
     const deleteOptions = {
                 method: 'DELETE',

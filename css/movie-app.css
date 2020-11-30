@@ -12,15 +12,11 @@ body{
 .navbar{
     background: var(--orange);
 }
-
 .card{
     background: var(--green);
     border: 3px solid var(--yellow);
 }
-
-
-
-.loading {
+.loading-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +24,18 @@ body{
 .hidden {
     display: none;
 }
-
-#titleInput{
-
+.movie-container {
+    display: flex;
+    justify-content: center;
+    margin: 15px auto;
+}
+.movie-columns {
+    display: flex;
+    justify-content: center;
+}
+.button-row {
+    display: flex;
+}
+.button {
+    flex-grow: 1;
 }
