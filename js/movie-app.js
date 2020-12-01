@@ -17,6 +17,7 @@ $(document).ready( function(){
     }
 
     const fetchData = (delay) => {
+        $('.loading-container').css('margin-top', '150px')
         loading.toggle('hidden')
         mainRow.toggle('hidden')
         setTimeout(function(){
@@ -25,6 +26,7 @@ $(document).ready( function(){
                 .then(data => {
                     renderHTML(data);
                 })
+                .then($('.loading-container').css('margin-top', '0'))
                 .then(loading.toggle('hidden'))
                 .then(mainRow.toggle('hidden'))
                 .catch(error => console.error(error))
@@ -159,7 +161,7 @@ $(document).ready( function(){
             }
             modalHTML += `</select>
                             </div>
-                           <textarea id="plotInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" oninput='$(this).style.height = "";$(this).style.height = $(this).scrollHeight + 3 + "px"'>${ele.plot}</textarea>
+                           <textarea id="plotInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2">${ele.plot}</textarea>
                   <div class="modal-footer">
                        <button id="editMovie${ele.id}" class="btn btn-primary" data-dismiss="modal">Submit</button>
                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

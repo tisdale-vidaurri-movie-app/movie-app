@@ -34,9 +34,4 @@ body{
     justify-content: center;
     margin: 15px auto;
 }
-.button-row {
-    display: flex;
-}
-.button {
-    flex-grow: 1;
-}
+
