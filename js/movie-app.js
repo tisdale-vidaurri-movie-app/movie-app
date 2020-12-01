@@ -15,26 +15,20 @@ $(document).ready( function(){
             'Content-Type': 'application/json'
         }
     }
-    const movieApiURL = `https://api.themoviedb.org/3/search/movie?/api_key=${omdbKey}`
 
-    fetch(`${movieApiURL}SavingPrivateRyan&callback=?`)
-        .then(res => res.json())
-        .then(data => console.log(data))
-        .catch(error => console.error(error))
-
-    const fetchData = () => {
+    const fetchData = (delay) => {
         loading.toggle('hidden')
         mainRow.toggle('hidden')
         setTimeout(function(){
             fetch(url)
                 .then(res => res.json())
-                .then(loading.toggle('hidden'))
                 .then(data => {
                     renderHTML(data);
-                    mainRow.toggle('hidden');
                 })
+                .then(loading.toggle('hidden'))
+                .then(mainRow.toggle('hidden'))
                 .catch(error => console.error(error))
-        }, 2000)
+        }, delay)
     }
 
     const renderHTML = data => {
@@ -66,7 +60,7 @@ $(document).ready( function(){
                     fetch(`${url}/${ele.id}`, deleteOptions)
                         .then(res => res.json())
                         .then(data => console.log(data))
-                        .then(fetchData())
+                        .then(fetchData(2000))
                         .then($(`#deleteMovie${ele.id}`).removeAttr('disabled'))
                         .catch(error => console.error(error))
                 } else {
@@ -97,7 +91,7 @@ $(document).ready( function(){
                 fetch(`${url}/${ele.id}`, patchOptions)
                     .then(res => res.json())
                     .then(data => console.log(data))
-                    .then(fetchData())
+                    .then(fetchData(2000))
                     .then($(`#editMovie${ele.id}`).removeAttr('disabled'))
                     .catch(error => console.error(error))
             })
@@ -165,7 +159,7 @@ $(document).ready( function(){
             }
             modalHTML += `</select>
                             </div>
-                           <textarea id="plotInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2">${ele.plot}</textarea>
+                           <textarea id="plotInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" oninput='$(this).style.height = "";$(this).style.height = $(this).scrollHeight + 3 + "px"'>${ele.plot}</textarea>
                   <div class="modal-footer">
                        <button id="editMovie${ele.id}" class="btn btn-primary" data-dismiss="modal">Submit</button>
                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -200,11 +194,11 @@ $(document).ready( function(){
         fetch(url, postOptions)
             .then(res => res.json())
             .then(data => console.log(data))
-            .then(fetchData())
+            .then(fetchData(2000))
             .then(addBtn.removeAttr('disabled'))
             .catch(error => console.error(error))
     })
 
-    fetchData();
+    fetchData(6000);
 
 })
