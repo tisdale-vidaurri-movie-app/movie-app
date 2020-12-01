@@ -124,9 +124,9 @@ $(document).ready( function(){
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <input id="titleInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" placeholder="${ele.title}">
-                                        <input id="yearInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" placeholder="${ele.year}">
-                                        <input id="genreInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" placeholder="${ele.genre}">
+                                        <input id="titleInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" value="${ele.title}">
+                                        <input id="yearInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" value="${ele.year}">
+                                        <input id="genreInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" value="${ele.genre}">
                                         <div class="input-group mb-2 mr-sm-2">
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">Rating</div>
@@ -165,7 +165,7 @@ $(document).ready( function(){
             }
             modalHTML += `</select>
                             </div>
-                           <textarea id="plotInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2" placeholder="${ele.plot}"></textarea>
+                           <textarea id="plotInput${ele.id}" type="text" class="form-control mb-2 mr-sm-2">${ele.plot}</textarea>
                   <div class="modal-footer">
                        <button id="editMovie${ele.id}" class="btn btn-primary" data-dismiss="modal">Submit</button>
                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
